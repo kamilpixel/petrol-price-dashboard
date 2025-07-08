@@ -29,7 +29,7 @@ export default function PriceCardsComponents({
   }
 
   return (
-    <div className="bg-white p-6 shadow-lg ring-1 ring-slate-200">
+    <div className="bg-white p-6 shadow ring-1 ring-slate-200">
       {/* Petrol type and price label */}
       <div className="flex flex-start gap-4">
         <div>

@@ -5,10 +5,6 @@ import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
   Tab,
   TabGroup,
   TabList,
@@ -17,8 +13,6 @@ import {
 } from "@headlessui/react";
 import {
   Bars3Icon,
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
   XMarkIcon,
   HomeModernIcon,
   Cog6ToothIcon,
@@ -26,6 +20,21 @@ import {
 } from "@heroicons/react/24/outline";
 import PriceCardsComponents from "~/components/PriceCardsComponent";
 import BannerComponent from "~/components/BannerComponent";
+
+import {
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement,
+} from "chart.js";
+
+import { Doughnut, Bar, Line } from "react-chartjs-2";
 
 const navigation = {
   categories: [
@@ -163,12 +172,149 @@ const navigationDesktop = [
   { name: "Logout", href: "#", current: false, icon: PowerIcon },
 ];
 
+// Register Chart.js components
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  PointElement,
+  LineElement
+);
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
+  const [selectedChart, setSelectedChart] = useState<"daily" | "monthly">(
+    "daily"
+  );
+
+  const barOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    scales: {
+      x: {
+        stacked: false,
+      },
+      y: {
+        stacked: false,
+      },
+    },
+  };
+  const labels = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+  ];
+
+  const monthlyBarData = {
+    labels: [
+      "2025-01-31",
+      "2025-02-28",
+      "2025-03-31",
+      "2025-04-30",
+      "2025-05-31",
+      "2025-06-30",
+    ],
+    datasets: [
+      {
+        label: "RON95",
+        data: [2.04, 2.1, 2.07, 2.06, 2.02, 2.02],
+        backgroundColor: "rgba(255, 105, 0, 1)",
+      },
+      {
+        label: "RON97",
+        data: [3.0, 3.33, 3.22, 3.26, 2.99, 3.37],
+        backgroundColor: "rgba(0, 201, 81, 1)",
+      },
+      {
+        label: "Diesel",
+        data: [2.92, 2.79, 2.79, 2.79, 2.81, 2.85],
+        backgroundColor: "rgba(106, 114, 130, 1)",
+      },
+      {
+        label: "Diesel East Malaysia",
+        data: [2.15, 2.15, 2.15, 2.15, 2.15, 2.15],
+        backgroundColor: "rgba(49, 58, 78)",
+      },
+    ],
+  };
+
+  const lineOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "bottom" as const,
+      },
+    },
+  };
+
+  const lineData = {
+    labels: [
+      "2025-06-26",
+      "2025-06-19",
+      "2025-06-12",
+      "2025-06-05",
+      "2025-05-29",
+    ],
+    datasets: [
+      {
+        label: "RON95",
+        data: [2.05, 2.05, 2.05, 2.05, 2.05],
+        borderColor: "rgba(255, 105, 0, 1)",
+        backgroundColor: "rgba(255, 105, 0, 1)",
+        tension: 0.4,
+      },
+      {
+        label: "RON97",
+        data: [3.21, 3.14, 3.07, 3.07, 3.1],
+        borderColor: "rgba(0, 201, 81, 1)",
+        backgroundColor: "rgba(0, 201, 81, 1)",
+        tension: 0.4,
+      },
+      {
+        label: "Diesel",
+        data: [2.88, 2.81, 2.74, 2.74, 2.77],
+        borderColor: "rgba(106, 114, 130, 1)",
+        backgroundColor: "rgba(106, 114, 130, 1)",
+        tension: 0.4,
+      },
+      {
+        label: "Diesel East Malaysia",
+        data: [2.15, 2.15, 2.15, 2.15, 2.15],
+        borderColor: "rgb(49, 58, 78)",
+        backgroundColor: "rgba(49, 58, 78)",
+        tension: 0.4,
+      },
+    ],
+  };
+
+  const charts = [
+    {
+      id: 11,
+      chartType: "line",
+      chartTitle: "Daily price trends",
+      chartData: lineData,
+    },
+    {
+      id: 12,
+      chartType: "bar",
+      chartTitle: "Monthly price trends",
+      chartData: monthlyBarData,
+    },
+  ];
 
   return (
     <div className="bg-white w-full h-full">
@@ -183,6 +329,7 @@ export default function Dashboard() {
             transition
             className="relative flex w-full max-w-xs transform flex-col overflow-y-auto bg-white pb-12 shadow-xl transition duration-300 ease-in-out data-closed:-translate-x-full"
           >
+            {/* Button close menu */}
             <div className="flex px-4 pt-5 pb-2">
               <button
                 type="button"
@@ -195,126 +342,8 @@ export default function Dashboard() {
               </button>
             </div>
 
-            {/* Links */}
-            <TabGroup className="mt-2">
-              <div className="border-b border-gray-200">
-                <TabList className="-mb-px flex space-x-8 px-4">
-                  {navigation.categories.map((category) => (
-                    <Tab
-                      key={category.name}
-                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-base font-medium whitespace-nowrap text-gray-900 data-selected:border-indigo-600 data-selected:text-indigo-600"
-                    >
-                      {category.name}
-                    </Tab>
-                  ))}
-                </TabList>
-              </div>
-              <TabPanels as={Fragment}>
-                {navigation.categories.map((category) => (
-                  <TabPanel
-                    key={category.name}
-                    className="space-y-10 px-4 pt-10 pb-8"
-                  >
-                    <div className="grid grid-cols-2 gap-x-4">
-                      {category.featured.map((item) => (
-                        <div key={item.name} className="group relative text-sm">
-                          <img
-                            alt={item.imageAlt}
-                            src={item.imageSrc}
-                            className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
-                          />
-                          <a
-                            href={item.href}
-                            className="mt-6 block font-medium text-gray-900"
-                          >
-                            <span
-                              aria-hidden="true"
-                              className="absolute inset-0 z-10"
-                            />
-                            {item.name}
-                          </a>
-                          <p aria-hidden="true" className="mt-1">
-                            Shop now
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                    {category.sections.map((section) => (
-                      <div key={section.name}>
-                        <p
-                          id={`${category.id}-${section.id}-heading-mobile`}
-                          className="font-medium text-gray-900"
-                        >
-                          {section.name}
-                        </p>
-                        <ul
-                          role="list"
-                          aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
-                          className="mt-6 flex flex-col space-y-6"
-                        >
-                          {section.items.map((item) => (
-                            <li key={item.name} className="flow-root">
-                              <a
-                                href={item.href}
-                                className="-m-2 block p-2 text-gray-500"
-                              >
-                                {item.name}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </TabPanel>
-                ))}
-              </TabPanels>
-            </TabGroup>
-
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-              {navigation.pages.map((page) => (
-                <div key={page.name} className="flow-root">
-                  <a
-                    href={page.href}
-                    className="-m-2 block p-2 font-medium text-gray-900"
-                  >
-                    {page.name}
-                  </a>
-                </div>
-              ))}
-            </div>
-
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-              <div className="flow-root">
-                <a
-                  href="#"
-                  className="-m-2 block p-2 font-medium text-gray-900"
-                >
-                  Sign in
-                </a>
-              </div>
-              <div className="flow-root">
-                <a
-                  href="#"
-                  className="-m-2 block p-2 font-medium text-gray-900"
-                >
-                  Create account
-                </a>
-              </div>
-            </div>
-
-            <div className="border-t border-gray-200 px-4 py-6">
-              <a href="#" className="-m-2 flex items-center p-2">
-                <img
-                  alt=""
-                  src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
-                  className="block h-auto w-5 shrink-0"
-                />
-                <span className="ml-3 block text-base font-medium text-gray-900">
-                  CAD
-                </span>
-                <span className="sr-only">, change currency</span>
-              </a>
-            </div>
+            {/* Mobile link goes here */}
+            <p className="p-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus ea ducimus atque, ut obcaecati, quibusdam delectus aut facilis temporibus itaque minus at nulla mollitia praesentium explicabo illum assumenda unde placeat.</p>
           </DialogPanel>
         </div>
       </Dialog>
@@ -338,8 +367,8 @@ export default function Dashboard() {
             {/* Logo */}
             <div className="relative hidden lg:block">
               <div className="flex flex-col items-center justify-center h-42">
-                <HomeModernIcon className="size-12 text-green-800" />
-                <span className="text-lg pt-2 text-slate-700">Malaysia</span>
+                <img src="/logo_fuel_flux_low.png" alt="Fuelflux" className="w-32 h-auto"/>
+                <span className="text-lg text-green-600">Malaysia</span>
               </div>
 
               <div className="">
@@ -373,21 +402,104 @@ export default function Dashboard() {
           <BannerComponent />
           {/* Page title & description */}
           <div className="bg-gray-50 p-6 pb-10">
-            <p className="text-3xl text-gray-600 pb-2">Price of Petroleum & Diesel Trends</p>
-            <p className="text-gray-400">A comprehensive platform for analyzing and tracking retail petroleum price trends</p>
+            <p className="text-3xl text-gray-600 pb-2">
+              Price of petroleum & diesel trends
+            </p>
+            <p className="text-gray-400">
+              A comprehensive platform for analyzing and tracking retail
+              petroleum price trends
+            </p>
           </div>
           {/* Main content goes here */}
           <div className="p-4">
             {/* Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <PriceCardsComponents petrolType="RON95" petrolPrice={2.50} petrolRegion="All region" />
-              <PriceCardsComponents petrolType="RON97" petrolPrice={3.21} petrolRegion="All region" />
-              <PriceCardsComponents petrolType="DIESEL" petrolPrice={2.88} petrolRegion="Peninsular Malaysia"/>
-              <PriceCardsComponents petrolType="DIESEL" petrolPrice={2.15} petrolRegion="Sabah, Sarawak & Labuan" />
+              <PriceCardsComponents
+                petrolType="RON95"
+                petrolPrice={2.5}
+                petrolRegion="All region"
+              />
+              <PriceCardsComponents
+                petrolType="RON97"
+                petrolPrice={3.21}
+                petrolRegion="All region"
+              />
+              <PriceCardsComponents
+                petrolType="DIESEL"
+                petrolPrice={2.88}
+                petrolRegion="Peninsular Malaysia"
+              />
+              <PriceCardsComponents
+                petrolType="DIESEL"
+                petrolPrice={2.15}
+                petrolRegion="Sabah, Sarawak & Labuan"
+              />
             </div>
           </div>
-          <div className="p-4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi deleniti dolores consequuntur nihil architecto, rerum recusandae, possimus unde vero autem omnis accusamus enim quo aliquam. Tempora, doloribus eos? Soluta, totam!
+          <div className="p-4 pb-6">
+            <div className="grid grid-cols-1 md:grid-cols-4">
+              {/* {chartElements} */}
+
+              <div className="bg-white shadow ring-1 ring-slate-200 md:col-span-3 order-2 md:order-1">
+                <div className="p-4 border-b border-slate-200 font-medium text-gray-600 bg-gray-50">
+                  {selectedChart === "daily"
+                    ? charts[0].chartTitle
+                    : charts[1].chartTitle}
+                </div>
+                <div className="flex-1 flex items-center justify-center p-4 h-96">
+                  {selectedChart === "daily" ? (
+                    <Line data={charts[0].chartData} options={lineOptions} />
+                  ) : (
+                    <Bar data={charts[1].chartData} options={barOptions} />
+                  )}
+                </div>
+              </div>
+
+              <div className="order-1 md:order-2 pb-4 md:pl-4">
+                <fieldset>
+                  <legend className="text-sm/6 font-semibold text-gray-900">
+                    Filter
+                  </legend>
+                  <p className="mt-1 text-sm/6 text-gray-600">
+                    Filter chart by daily or monthly
+                  </p>
+                  <div className="mt-2 space-y-2">
+                    <div className="flex items-center gap-x-3">
+                      <input
+                        id="filterDaily"
+                        name="filterChart"
+                        type="radio"
+                        checked={selectedChart === "daily"}
+                        onChange={() => setSelectedChart("daily")}
+                        className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-green-800 checked:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
+                      />
+                      <label
+                        htmlFor="filterDaily"
+                        className="block text-sm/6 font-medium text-gray-900 cursor-pointer"
+                      >
+                        Daily
+                      </label>
+                    </div>
+                    <div className="flex items-center gap-x-3">
+                      <input
+                        id="filterMonthly"
+                        name="filterChart"
+                        type="radio"
+                        checked={selectedChart === "monthly"}
+                        onChange={() => setSelectedChart("monthly")}
+                        className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-green-800 checked:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
+                      />
+                      <label
+                        htmlFor="filterMonthly"
+                        className="block text-sm/6 font-medium text-gray-900 cursor-pointer"
+                      >
+                        Monthly
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
           </div>
         </div>
       </div>

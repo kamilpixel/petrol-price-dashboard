@@ -4,8 +4,8 @@ export default function BannerComponent() {
       <div className="w-full h-full relative">
         <img
           className="w-full h-full object-cover"
-          src="https://picsum.photos/1000/700"
-          alt="project_title"
+          src="/bg.jpg"
+          alt="Fuelflux"
         />
         <div className="absolute bg-black opacity-40 w-full h-full top-0 left-0"></div>
       </div>

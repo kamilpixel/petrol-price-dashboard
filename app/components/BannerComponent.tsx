@@ -1,6 +1,6 @@
 export default function BannerComponent() {
   return (
-    <div className="w-full h-[150px] relative">
+    <div className="w-full h-[150px] relative hidden md:block">
       <div className="w-full h-full relative">
         <img
           className="w-full h-full object-cover"

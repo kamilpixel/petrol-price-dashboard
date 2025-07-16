@@ -1,30 +1,24 @@
 import { Icon } from "@iconify/react";
-import type { PetrolType, PetrolRegion } from "~/types/petrolType";
+import type { PetrolCard } from "~/types/petrolType";
 
-interface PriceCardsComponentsProps {
-  petrolType: PetrolType;
-  petrolPrice: number;
-  petrolRegion?: PetrolRegion;
+interface IPetrolCard {
+  card: PetrolCard;
 }
 
-export default function PriceCardsComponents({
-  petrolType,
-  petrolPrice,
-  petrolRegion,
-}: PriceCardsComponentsProps) {
+export default function PriceCardsComponents({ card }: IPetrolCard) {
   // set bgColor variable based on three conditions
   let bgColor = "bg-orange-100";
-  if (petrolType === "RON97") {
+  if (card.type === "ron97") {
     bgColor = "bg-green-100";
-  } else if (petrolType === "DIESEL") {
+  } else if (card.type === "diesel") {
     bgColor = "bg-gray-100";
   }
 
   // Set textColor
   let textColor = "text-orange-500";
-  if (petrolType === "RON97") {
+  if (card.type === "ron97") {
     textColor = "text-green-500";
-  } else if (petrolType === "DIESEL") {
+  } else if (card.type === "diesel") {
     textColor = "text-gray-500";
   }
 
@@ -34,7 +28,7 @@ export default function PriceCardsComponents({
       <div className="flex flex-start gap-4">
         <div>
           <div
-            className={`${bgColor} w-12 h-12 rounded-lg flex justify-center items-center `}
+            className={`${bgColor} w-12 h-12 rounded-lg flex justify-center cards-center `}
           >
             <Icon
               icon="mdi:gas-station-outline"
@@ -46,13 +40,13 @@ export default function PriceCardsComponents({
         </div>
         <div>
           <h3 className={`text-2xl font-semibold ${textColor}`}>
-            {petrolType}
+            {card.label}
           </h3>
-          <p className="text-gray-600 font-medium">RM{petrolPrice}/per litre</p>
+          <p className="text-gray-600 font-medium">RM{card.price}/per litre</p>
 
           {/* Region label */}
-          {petrolRegion && (
-            <div className="text-gray-400 pb-2">{petrolRegion}</div>
+          {card.region && (
+            <div className="text-gray-400 pb-2">{card.region}</div>
           )}
         </div>
       </div>

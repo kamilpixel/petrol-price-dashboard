@@ -28,7 +28,7 @@ export default function PriceCardsComponents({ card }: IPetrolCard) {
       <div className="flex flex-start gap-4">
         <div>
           <div
-            className={`${bgColor} w-12 h-12 rounded-lg flex justify-center cards-center `}
+            className={`${bgColor} w-12 h-12 rounded-lg flex items-center justify-center`}
           >
             <Icon
               icon="mdi:gas-station-outline"

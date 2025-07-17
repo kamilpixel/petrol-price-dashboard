@@ -7,7 +7,6 @@ import {
   XMarkIcon,
   HomeModernIcon,
   Cog6ToothIcon,
-  PowerIcon,
 } from "@heroicons/react/24/outline";
 import BannerComponent from "~/components/BannerComponent";
 import type { SidebarMenu } from "~/types/sidebarMenuType";
@@ -18,7 +17,6 @@ const navItems: SidebarMenu[] = [
   { name: "Dashboard", href: "/", current: true, icon: HomeModernIcon },
   { name: "About", href: "/about", current: false, icon: Cog6ToothIcon },
   { name: "Settings", href: "/settings", current: false, icon: Cog6ToothIcon },
-  { name: "Logout", href: "#", current: false, icon: PowerIcon },
 ];
 
 export default function MainLayout() {

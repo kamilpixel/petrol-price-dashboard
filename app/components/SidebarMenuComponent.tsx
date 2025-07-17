@@ -1,5 +1,5 @@
+import { Form, Link, NavLink, Outlet } from "react-router";
 import type { SidebarMenu } from "~/types/sidebarMenuType";
-
 interface SidebarMenuComponentProps {
   menuItems: SidebarMenu[];
 }
@@ -17,20 +17,23 @@ export default function SidebarMenuComponent({
         const ItemIcon = item.icon;
 
         return (
-          <a
+          <NavLink
+            className={({ isActive, isPending }) =>
+              classNames(
+                isActive
+                  ? "bg-green-800 text-white"
+                  : isPending
+                  ? "bg-green-800"
+                  : "text-slate-600 hover:bg-green-700 hover:text-white",
+                "block px-4 py-4 text-base flex items-center w-full cursor-pointer"
+              )
+            }
+            to={item.href}
             key={item.name}
-            href={item.href}
-            aria-current={item.current ? "page" : undefined}
-            className={classNames(
-              item.current
-                ? "bg-green-800 text-white"
-                : "text-slate-600 hover:bg-green-700 hover:text-white",
-              "block px-4 py-4 text-base flex items-center w-full cursor-pointer"
-            )}
           >
             <ItemIcon aria-hidden="true" className="size-5 mr-2" />
             {item.name}
-          </a>
+          </NavLink>
         );
       })}
     </>

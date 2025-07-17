@@ -1,3 +1,4 @@
+import type { Route } from "./+types/home";
 import { useEffect, useState } from "react";
 import PriceCardsComponents from "~/components/PriceCardsComponent";
 import {
@@ -32,8 +33,12 @@ ChartJS.register(
   LineElement
 );
 
-let initData = true;
-let isChartLoaded = false;
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Dashboard" },
+    { name: "description", content: "Explore Fuelflux dashboard" },
+  ];
+}
 
 export default function Dashboard() {
   const [selectedChart, setSelectedChart] = useState<Frequency>("daily");
@@ -42,6 +47,9 @@ export default function Dashboard() {
   const [loadingCharts, setLoadingCharts] = useState(true);
   const [lineChartData, setLineChartData] = useState<any>(null);
   const [barChartData, setBarChartData] = useState<any>(null);
+
+  let initData = true;
+  let isChartLoaded = false;
 
   const barOptions = {
     responsive: true,

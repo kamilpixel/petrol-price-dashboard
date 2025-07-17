@@ -3,7 +3,7 @@ import type { Route } from "./+types/home";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "About" },
-    { name: "description", content: "This is about" },
+    { name: "description", content: "About Fuelflux" },
   ];
 }
 

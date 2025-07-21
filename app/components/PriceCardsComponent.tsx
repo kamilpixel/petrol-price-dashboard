@@ -39,14 +39,14 @@ export default function PriceCardsComponents({ card }: IPetrolCard) {
           </div>
         </div>
         <div>
-          <h3 className={`text-2xl font-semibold ${textColor}`}>
+          <h3 className={`text-2xl font-semibold ${textColor}`} data-testid="test-id-label">
             {card.label}
           </h3>
-          <p className="text-gray-600 font-medium">RM{card.price}/per litre</p>
+          <p className="text-gray-600 font-medium" data-testid="test-id-price">RM{card.price}/per litre</p>
 
           {/* Region label */}
           {card.region && (
-            <div className="text-gray-400 pb-2">{card.region}</div>
+            <div className="text-gray-400 pb-2" data-testid="test-id-region">{card.region}</div>
           )}
         </div>
       </div>

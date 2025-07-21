@@ -1,17 +1,14 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { reactRouter } from "@react-router/dev/vite";
+import tailwindcss from "@tailwindcss/vite";
 
 const isTest = process.env.VITEST === "true";
+let pluginList = (isTest) ? [tsconfigPaths(), react()] : [tailwindcss(), reactRouter(), tsconfigPaths()];
 
 export default defineConfig({
-  plugins: [
-    tsconfigPaths(),
-    react(),
-    !isTest && (await import("@tailwindcss/vite")).default(),
-    !isTest &&
-      (await import("@react-router/dev/vite")).then((m) => m.reactRouter()),
-  ].filter(Boolean),
+  plugins: pluginList,
   test: {
     environment: "jsdom",
     globals: true,

@@ -5,4 +5,6 @@ export interface SidebarMenu {
   href: string;
   current?: boolean;
   icon?: React.ReactNode;
+  pageTitle?: string;
+  pageDescription?: string;
 }

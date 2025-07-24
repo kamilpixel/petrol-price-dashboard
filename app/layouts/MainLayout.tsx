@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 
 import { useState } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
@@ -14,13 +14,38 @@ import SidebarMenuComponent from '~/components/SidebarMenuComponent';
 import '~/app.css';
 
 const navItems: SidebarMenu[] = [
-  { name: 'Dashboard', href: '/', current: true, icon: HomeModernIcon },
-  { name: 'About', href: '/about', current: false, icon: Cog6ToothIcon },
-  { name: 'Settings', href: '/settings', current: false, icon: Cog6ToothIcon },
+  {
+    name: 'Dashboard',
+    href: '/',
+    current: true,
+    icon: HomeModernIcon,
+    pageTitle: 'Dashboard',
+    pageDescription:
+      ' A comprehensive platform for analyzing and tracking retail petroleum price trends',
+  },
+  {
+    name: 'About',
+    href: '/about',
+    current: false,
+    icon: Cog6ToothIcon,
+    pageTitle: 'About Fuelflux',
+    pageDescription: 'Learn more about Fuelflux',
+  },
 ];
 
 export default function MainLayout() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  // Find the matching nav item by href
+  const currentNav = navItems.find((item) => item.href === location.pathname);
+
+  // Use pageTitle and pageDescription from navItems, fallback if not found
+  const pageTitle =
+    currentNav?.pageTitle || 'Price of petroleum & diesel trends';
+  const pageDescription =
+    currentNav?.pageDescription ||
+    'A comprehensive platform for analyzing and tracking retail petroleum price trends';
 
   return (
     <div className="bg-white w-full h-full">
@@ -98,13 +123,8 @@ export default function MainLayout() {
           <BannerComponent />
           {/* Page title & description */}
           <div className="bg-gray-50 p-6 pb-10">
-            <p className="text-3xl text-gray-600 pb-2">
-              Price of petroleum & diesel trends
-            </p>
-            <p className="text-gray-400">
-              A comprehensive platform for analyzing and tracking retail
-              petroleum price trends
-            </p>
+            <p className="text-3xl text-gray-600 pb-2">{pageTitle}</p>
+            <p className="text-gray-400">{pageDescription}</p>
           </div>
           {/* Main content goes here */}
           <Outlet />

@@ -1,11 +1,11 @@
-import { Form, Link, NavLink, Outlet } from "react-router";
-import type { SidebarMenu } from "~/types/sidebarMenuType";
+import { NavLink } from 'react-router';
+import type { SidebarMenu } from '~/types/sidebarMenuType';
 interface SidebarMenuComponentProps {
   menuItems: SidebarMenu[];
 }
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 export default function SidebarMenuComponent({
@@ -21,11 +21,11 @@ export default function SidebarMenuComponent({
             className={({ isActive, isPending }) =>
               classNames(
                 isActive
-                  ? "bg-green-800 text-white"
+                  ? 'bg-green-800 text-white'
                   : isPending
-                  ? "bg-green-800"
-                  : "text-slate-600 hover:bg-green-700 hover:text-white",
-                "block px-4 py-4 text-base flex items-center w-full cursor-pointer"
+                    ? 'bg-green-800'
+                    : 'text-slate-600 hover:bg-green-700 hover:text-white',
+                'block px-4 py-4 text-base flex items-center w-full cursor-pointer',
               )
             }
             to={item.href}

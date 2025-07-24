@@ -1,6 +1,5 @@
-import type { Route } from "./+types/home";
-import { useEffect, useState } from "react";
-import PriceCardsComponents from "~/components/PriceCardsComponent";
+import { useEffect, useState } from 'react';
+import PriceCardsComponents from '~/components/PriceCardsComponent';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -12,13 +11,14 @@ import {
   Legend,
   PointElement,
   LineElement,
-} from "chart.js";
-import { Bar, Line } from "react-chartjs-2";
-import axios from "axios";
-import type { PetrolCard } from "~/types/petrolType";
-import PetrolCardsLoading from "~/components/shared/skeletons/PetrolCardsLoading";
-import type { Frequency } from "~/types/frequencyType";
-import LoadingSpinner from "~/components/shared/LoadingSpinner";
+} from 'chart.js';
+import { Bar, Line } from 'react-chartjs-2';
+import axios from 'axios';
+import type { PetrolCard } from '~/types/petrolType';
+import PetrolCardsLoading from '~/components/shared/skeletons/PetrolCardsLoading';
+import type { Frequency } from '~/types/frequencyType';
+import LoadingSpinner from '~/components/shared/LoadingSpinner';
+import type { ChartData } from 'chart.js';
 
 // Register Chart.js components
 ChartJS.register(
@@ -30,23 +30,27 @@ ChartJS.register(
   BarElement,
   Title,
   PointElement,
-  LineElement
+  LineElement,
 );
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
-    { title: "Dashboard" },
-    { name: "description", content: "Explore Fuelflux dashboard" },
+    { title: 'Dashboard' },
+    { name: 'description', content: 'Explore Fuelflux dashboard' },
   ];
 }
 
 export default function Dashboard() {
-  const [selectedChart, setSelectedChart] = useState<Frequency>("daily");
+  const [selectedChart, setSelectedChart] = useState<Frequency>('daily');
   const [loading, setLoading] = useState(true);
   const [petrolPrices, setPetrolPrices] = useState<PetrolCard[]>([]);
   const [loadingCharts, setLoadingCharts] = useState(true);
-  const [lineChartData, setLineChartData] = useState<any>(null);
-  const [barChartData, setBarChartData] = useState<any>(null);
+  const [lineChartData, setLineChartData] = useState<ChartData<'line'> | null>(
+    null,
+  );
+  const [barChartData, setBarChartData] = useState<ChartData<'bar'> | null>(
+    null,
+  );
 
   let initData = true;
   let isChartLoaded = false;
@@ -69,7 +73,7 @@ export default function Dashboard() {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "bottom" as const,
+        position: 'bottom' as const,
       },
     },
   };
@@ -79,7 +83,7 @@ export default function Dashboard() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("data/petrol-price.json");
+        const response = await axios.get('data/petrol-price.json');
         setPetrolPrices(response.data);
       } catch (error) {
         console.log(error);
@@ -97,18 +101,20 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async (frequency: Frequency) => {
       const CHARTS_API = {
-        daily: "data/daily-chart.json",
-        monthly: "data/monthly-chart.json",
+        daily: 'data/daily-chart.json',
+        monthly: 'data/monthly-chart.json',
       };
 
       setLoadingCharts(true);
       try {
         const response = await axios.get(
-          frequency === "daily" ? CHARTS_API.daily : CHARTS_API.monthly
+          frequency === 'daily' ? CHARTS_API.daily : CHARTS_API.monthly,
         );
-        frequency === "daily"
-          ? setLineChartData(response.data)
-          : setBarChartData(response.data);
+        if (frequency === 'daily') {
+          setLineChartData(response.data);
+        } else {
+          setBarChartData(response.data);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -157,19 +163,19 @@ export default function Dashboard() {
             {loadingCharts ? (
               // Charts loading state
               <div className="flex-1 flex items-center justify-center p-4 h-96">
-                <LoadingSpinner />{" "}
+                <LoadingSpinner />{' '}
                 <span className="text-green-800">Loading charts...</span>
               </div>
             ) : (
               // Render actual charts
               <>
                 <div className="p-4 border-b border-slate-200 font-medium text-gray-600 bg-gray-50">
-                  {selectedChart === "daily"
+                  {selectedChart === 'daily'
                     ? lineChartData && lineChartData.heading
                     : barChartData && barChartData.heading}
                 </div>
                 <div className="flex-1 flex items-center justify-center p-4 h-96">
-                  {selectedChart === "daily" ? (
+                  {selectedChart === 'daily' ? (
                     lineChartData ? (
                       <Line data={lineChartData} options={lineOptions} />
                     ) : (
@@ -199,8 +205,8 @@ export default function Dashboard() {
                     id="filterDaily"
                     name="filterChart"
                     type="radio"
-                    checked={selectedChart === "daily"}
-                    onChange={() => onChangeChart("daily")}
+                    checked={selectedChart === 'daily'}
+                    onChange={() => onChangeChart('daily')}
                     className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-green-800 checked:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
                   />
                   <label
@@ -215,8 +221,8 @@ export default function Dashboard() {
                     id="filterMonthly"
                     name="filterChart"
                     type="radio"
-                    checked={selectedChart === "monthly"}
-                    onChange={() => onChangeChart("monthly")}
+                    checked={selectedChart === 'monthly'}
+                    onChange={() => onChangeChart('monthly')}
                     className="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-green-800 checked:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-800 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden"
                   />
                   <label

@@ -1,22 +1,22 @@
-import { Outlet } from "react-router";
+import { Outlet } from 'react-router';
 
-import { useState } from "react";
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { useState } from 'react';
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import {
   Bars3Icon,
   XMarkIcon,
   HomeModernIcon,
   Cog6ToothIcon,
-} from "@heroicons/react/24/outline";
-import BannerComponent from "~/components/BannerComponent";
-import type { SidebarMenu } from "~/types/sidebarMenuType";
-import SidebarMenuComponent from "~/components/SidebarMenuComponent";
-import "~/app.css";
+} from '@heroicons/react/24/outline';
+import BannerComponent from '~/components/BannerComponent';
+import type { SidebarMenu } from '~/types/sidebarMenuType';
+import SidebarMenuComponent from '~/components/SidebarMenuComponent';
+import '~/app.css';
 
 const navItems: SidebarMenu[] = [
-  { name: "Dashboard", href: "/", current: true, icon: HomeModernIcon },
-  { name: "About", href: "/about", current: false, icon: Cog6ToothIcon },
-  { name: "Settings", href: "/settings", current: false, icon: Cog6ToothIcon },
+  { name: 'Dashboard', href: '/', current: true, icon: HomeModernIcon },
+  { name: 'About', href: '/about', current: false, icon: Cog6ToothIcon },
+  { name: 'Settings', href: '/settings', current: false, icon: Cog6ToothIcon },
 ];
 
 export default function MainLayout() {

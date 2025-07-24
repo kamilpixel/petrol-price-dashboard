@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from "react-router";
-import { vi, test, describe, expect } from 'vitest';
+import { MemoryRouter } from 'react-router';
+import { test, describe, expect } from 'vitest';
 import SidebarMenuComponent from './SidebarMenuComponent';
 import type { SidebarMenu } from '~/types/sidebarMenuType';
 
@@ -19,7 +19,7 @@ describe('SidebarMenuComponent', () => {
     render(
       <MemoryRouter>
         <SidebarMenuComponent menuItems={mockMenuItems} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText('Dashboard')).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe('SidebarMenuComponent', () => {
     render(
       <MemoryRouter>
         <SidebarMenuComponent menuItems={mockMenuItems} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const links = screen.getAllByRole('link');
@@ -46,7 +46,7 @@ describe('SidebarMenuComponent', () => {
     render(
       <MemoryRouter>
         <SidebarMenuComponent menuItems={[]} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.queryByRole('link')).not.toBeInTheDocument();

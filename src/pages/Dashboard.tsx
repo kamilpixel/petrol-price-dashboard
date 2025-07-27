@@ -19,6 +19,7 @@ import PetrolCardsLoading from '~/components/shared/skeletons/PetrolCardsLoading
 import type { Frequency } from '~/types/frequencyType';
 import LoadingSpinner from '~/components/shared/LoadingSpinner';
 import type { ChartData } from 'chart.js';
+import { Helmet } from "react-helmet-async";
 
 // Register Chart.js components
 ChartJS.register(
@@ -32,13 +33,6 @@ ChartJS.register(
   PointElement,
   LineElement,
 );
-
-export function meta() {
-  return [
-    { title: 'Dashboard' },
-    { name: 'description', content: 'Explore Fuelflux dashboard' },
-  ];
-}
 
 export default function Dashboard() {
   const [selectedChart, setSelectedChart] = useState<Frequency>('daily');
@@ -134,6 +128,14 @@ export default function Dashboard() {
 
   return (
     <>
+      <Helmet>
+        <title>Dashboard | Fuelflux</title>
+        <meta
+          name="description"
+          content="A fuel price dashboard that helps you compare, track, and save on fuel costs with real-time visual analytics."
+        />
+      </Helmet>
+
       {/* Cards section */}
       <div className="p-4">
         {loading ? (

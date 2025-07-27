@@ -2,7 +2,6 @@ import {
   createHashRouter,
   RouterProvider,
   Outlet,
-  // useLoaderData
 } from "react-router-dom";
 
 import "./app.css";

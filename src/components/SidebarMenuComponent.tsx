@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import type { SidebarMenu } from '~/types/sidebarMenuType';
 interface SidebarMenuComponentProps {
   menuItems: SidebarMenu[];

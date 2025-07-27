@@ -11,7 +11,6 @@ import {
 import BannerComponent from '~/components/BannerComponent';
 import type { SidebarMenu } from '~/types/sidebarMenuType';
 import SidebarMenuComponent from '~/components/SidebarMenuComponent';
-import '~/app.css';
 
 const navItems: SidebarMenu[] = [
   {

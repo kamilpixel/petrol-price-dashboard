@@ -2,7 +2,7 @@
   "name": "petrol-price-dashboard",
   "private": true,
   "type": "module",
-  "homepage": "https://kamilpixel.github.io/petrol-price-dashboard-source",
+  "homepage": "https://kamilpixel.github.io/petrol-price-dashboard",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

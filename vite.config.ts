@@ -5,7 +5,7 @@ import rollupReplace from '@rollup/plugin-replace';
 
 export default defineConfig(({ mode }) => {
   return {
-    base: mode === 'production' ? '/petrol-price-dashboard-source/' : '/',
+    base: mode === 'production' ? '/petrol-price-dashboard/' : '/',
     plugins: [
       rollupReplace({
         preventAssignment: true,

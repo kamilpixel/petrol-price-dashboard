@@ -1,10 +1,12 @@
+import bgImageSrc from '~/assets/bg.jpg';
+
 export default function BannerComponent() {
   return (
     <div className="w-full h-[150px] relative hidden md:block">
       <div className="w-full h-full relative">
         <img
           className="w-full h-full object-cover"
-          src="/bg.jpg"
+          src={bgImageSrc}
           alt="Fuelflux"
         />
         <div className="absolute bg-black opacity-40 w-full h-full top-0 left-0"></div>

@@ -11,6 +11,7 @@ import {
 import BannerComponent from '~/components/BannerComponent';
 import type { SidebarMenu } from '~/types/sidebarMenuType';
 import SidebarMenuComponent from '~/components/SidebarMenuComponent';
+import logImageSrc from '~/assets/logo_fuel_flux_low.png';
 
 const navItems: SidebarMenu[] = [
   {
@@ -96,7 +97,7 @@ export default function MainLayout() {
               </button>
               {/* Logo mobile */}
               <img
-                src="/logo_fuel_flux_low.png"
+                src={logImageSrc}
                 alt="Fuelflux"
                 className="w-12 h-auto object-contain mr-2"
               />
@@ -106,7 +107,7 @@ export default function MainLayout() {
             <div className="relative hidden lg:block">
               <div className="flex flex-col items-center justify-center h-42">
                 <img
-                  src="/logo_fuel_flux_low.png"
+                  src={logImageSrc}
                   alt="Fuelflux"
                   className="w-32 h-auto"
                 />

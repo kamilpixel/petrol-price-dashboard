@@ -1,10 +1,10 @@
-import React from 'react';
+import type { ComponentType, SVGProps } from 'react';
 
 export interface SidebarMenu {
   name: string;
   href: string;
   current?: boolean;
-  icon?: React.ReactNode;
+  icon?: ComponentType<SVGProps<SVGSVGElement>>;
   pageTitle?: string;
   pageDescription?: string;
 }

@@ -1,10 +1,8 @@
 import {
   createHashRouter,
   RouterProvider,
-  Outlet,
 } from "react-router-dom";
 
-import "./app.css";
 import MainLayout from "./layouts/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
@@ -12,11 +10,7 @@ import About from "./pages/About";
 const router = createHashRouter([
   {
     path: "/",
-    element: (
-      <MainLayout>
-        <Outlet />
-      </MainLayout>
-    ),
+    element: <MainLayout />,
     children: [
       {
         index: true,
@@ -35,9 +29,7 @@ export default function App() {
     <RouterProvider
       router={router}
       fallbackElement={<p>Loading...</p>}
-      future={{
-        v7_startTransition: true,
-      }}
+      future={{ v7_startTransition: true }}
     />
   );
 }

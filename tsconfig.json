@@ -14,10 +14,10 @@
     "verbatimModuleSyntax": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    // "importsNotUsedAsValues": "error",
     "paths": {
       "~/*": ["./src/*"]
-    }
+    },
+    "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
   "include": ["./src"]
 }

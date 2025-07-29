@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
   PointElement,
-  LineElement,
+  LineElement
 } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
 import axios from 'axios';
@@ -19,7 +19,7 @@ import PetrolCardsLoading from '~/components/shared/skeletons/PetrolCardsLoading
 import type { Frequency } from '~/types/frequencyType';
 import LoadingSpinner from '~/components/shared/LoadingSpinner';
 import type { ChartData } from 'chart.js';
-import { Helmet } from "react-helmet-async";
+import { Helmet } from 'react-helmet-async';
 
 // Register Chart.js components
 ChartJS.register(
@@ -31,7 +31,7 @@ ChartJS.register(
   BarElement,
   Title,
   PointElement,
-  LineElement,
+  LineElement
 );
 
 export default function Dashboard() {
@@ -39,12 +39,15 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [petrolPrices, setPetrolPrices] = useState<PetrolCard[]>([]);
   const [loadingCharts, setLoadingCharts] = useState(true);
-  const [lineChartData, setLineChartData] = useState<ChartData<'line'> | null>(
-    null,
-  );
-  const [barChartData, setBarChartData] = useState<ChartData<'bar'> | null>(
-    null,
-  );
+  interface ILineChartData extends ChartData<'line'> {
+    heading: string;
+  }
+  interface IBarChartData extends ChartData<'bar'> {
+    heading: string;
+  }
+
+  const [lineChartData, setLineChartData] = useState<ILineChartData | null>(null);
+  const [barChartData, setBarChartData] = useState<IBarChartData | null>(null);
 
   let initData = true;
   let isChartLoaded = false;
@@ -54,12 +57,12 @@ export default function Dashboard() {
     maintainAspectRatio: false,
     scales: {
       x: {
-        stacked: false,
+        stacked: false
       },
       y: {
-        stacked: false,
-      },
-    },
+        stacked: false
+      }
+    }
   };
 
   const lineOptions = {
@@ -67,9 +70,9 @@ export default function Dashboard() {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'bottom' as const,
-      },
-    },
+        position: 'bottom' as const
+      }
+    }
   };
 
   // Fetch petrol price data
@@ -96,13 +99,13 @@ export default function Dashboard() {
     const fetchData = async (frequency: Frequency) => {
       const CHARTS_API = {
         daily: 'data/daily-chart.json',
-        monthly: 'data/monthly-chart.json',
+        monthly: 'data/monthly-chart.json'
       };
 
       setLoadingCharts(true);
       try {
         const response = await axios.get(
-          frequency === 'daily' ? CHARTS_API.daily : CHARTS_API.monthly,
+          frequency === 'daily' ? CHARTS_API.daily : CHARTS_API.monthly
         );
         if (frequency === 'daily') {
           setLineChartData(response.data);
@@ -141,7 +144,7 @@ export default function Dashboard() {
         {loading ? (
           // Cards loading state
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((item) => (
+            {[1, 2, 3, 4].map(item => (
               <PetrolCardsLoading key={item} />
             ))}
           </div>
@@ -149,9 +152,7 @@ export default function Dashboard() {
           // Render actual cards
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {petrolPrices.length ? (
-              petrolPrices.map((item) => (
-                <PriceCardsComponents key={item.type} card={item} />
-              ))
+              petrolPrices.map(item => <PriceCardsComponents key={item.type} card={item} />)
             ) : (
               <div>No records available...</div>
             )}
@@ -165,8 +166,7 @@ export default function Dashboard() {
             {loadingCharts ? (
               // Charts loading state
               <div className="flex-1 flex items-center justify-center p-4 h-96">
-                <LoadingSpinner />{' '}
-                <span className="text-green-800">Loading charts...</span>
+                <LoadingSpinner /> <span className="text-green-800">Loading charts...</span>
               </div>
             ) : (
               // Render actual charts
@@ -195,12 +195,8 @@ export default function Dashboard() {
 
           <div className="order-1 md:order-2 pb-4 md:pl-4">
             <fieldset>
-              <legend className="text-sm/6 font-semibold text-gray-900">
-                Filter
-              </legend>
-              <p className="mt-1 text-sm/6 text-gray-600">
-                Filter chart by daily or monthly
-              </p>
+              <legend className="text-sm/6 font-semibold text-gray-900">Filter</legend>
+              <p className="mt-1 text-sm/6 text-gray-600">Filter chart by daily or monthly</p>
               <div className="mt-2 space-y-2">
                 <div className="flex items-center gap-x-3">
                   <input

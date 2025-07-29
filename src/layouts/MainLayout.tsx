@@ -2,12 +2,7 @@ import { Outlet, useLocation } from 'react-router';
 
 import { useState } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
-import {
-  Bars3Icon,
-  XMarkIcon,
-  HomeModernIcon,
-  Cog6ToothIcon,
-} from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon, HomeModernIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 import BannerComponent from '~/components/BannerComponent';
 import type { SidebarMenu } from '~/types/sidebarMenuType';
 import SidebarMenuComponent from '~/components/SidebarMenuComponent';
@@ -18,19 +13,19 @@ const navItems: SidebarMenu[] = [
     name: 'Dashboard',
     href: '/',
     current: true,
-    icon: HomeModernIcon,
+    icon: HomeModernIcon as React.FC<React.SVGProps<SVGSVGElement>>,
     pageTitle: 'Dashboard',
     pageDescription:
-      ' A comprehensive platform for analyzing and tracking retail petroleum price trends',
+      ' A comprehensive platform for analyzing and tracking retail petroleum price trends'
   },
   {
     name: 'About',
     href: '/about',
     current: false,
-    icon: Cog6ToothIcon,
+    icon: Cog6ToothIcon as React.FC<React.SVGProps<SVGSVGElement>>,
     pageTitle: 'About Fuelflux',
-    pageDescription: 'Learn more about Fuelflux',
-  },
+    pageDescription: 'Learn more about Fuelflux'
+  }
 ];
 
 export default function MainLayout() {
@@ -38,11 +33,10 @@ export default function MainLayout() {
   const location = useLocation();
 
   // Find the matching nav item by href
-  const currentNav = navItems.find((item) => item.href === location.pathname);
+  const currentNav = navItems.find(item => item.href === location.pathname);
 
   // Use pageTitle and pageDescription from navItems, fallback if not found
-  const pageTitle =
-    currentNav?.pageTitle || 'Price of petroleum & diesel trends';
+  const pageTitle = currentNav?.pageTitle || 'Price of petroleum & diesel trends';
   const pageDescription =
     currentNav?.pageDescription ||
     'A comprehensive platform for analyzing and tracking retail petroleum price trends';
@@ -96,21 +90,13 @@ export default function MainLayout() {
                 <Bars3Icon aria-hidden="true" className="size-6" />
               </button>
               {/* Logo mobile */}
-              <img
-                src={logImageSrc}
-                alt="Fuelflux"
-                className="w-12 h-auto object-contain mr-2"
-              />
+              <img src={logImageSrc} alt="Fuelflux" className="w-12 h-auto object-contain mr-2" />
             </div>
 
             {/* Logo desktop */}
             <div className="relative hidden lg:block">
               <div className="flex flex-col items-center justify-center h-42">
-                <img
-                  src={logImageSrc}
-                  alt="Fuelflux"
-                  className="w-32 h-auto"
-                />
+                <img src={logImageSrc} alt="Fuelflux" className="w-32 h-auto" />
                 <span className="text-lg text-green-600">Malaysia</span>
               </div>
               {/* Navigation desktop */}

@@ -1,27 +1,27 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
-import rollupReplace from "@rollup/plugin-replace";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import rollupReplace from '@rollup/plugin-replace';
 
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
   return {
     base: mode === 'production' ? '/petrol-price-dashboard-source/' : '/',
     plugins: [
       rollupReplace({
         preventAssignment: true,
         values: {
-          "process.env.NODE_ENV": JSON.stringify(mode),
-        },
+          'process.env.NODE_ENV': JSON.stringify(mode)
+        }
       }),
-      react(),
+      react()
     ],
     resolve: {
       alias: {
-        "~": path.resolve(__dirname, "src"),
-      },
+        '~': path.resolve(__dirname, 'src')
+      }
     },
     server: {
-      port: 3000,
+      port: 3000
     },
     test: {
       environment: 'jsdom',
@@ -31,8 +31,8 @@ export default defineConfig(({ command, mode }) => {
       coverage: {
         reporter: ['text', 'html', 'json-summary'],
         all: true,
-        exclude: ['**/test/**', '**/*.test.*', '**/node_modules/**'],
-      },
-    },
+        exclude: ['**/test/**', '**/*.test.*', '**/node_modules/**']
+      }
+    }
   };
 });

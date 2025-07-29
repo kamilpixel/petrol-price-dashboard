@@ -27,9 +27,7 @@ export default function PriceCardsComponents({ card }: IPetrolCard) {
       {/* Petrol type and price label */}
       <div className="flex flex-start gap-4">
         <div>
-          <div
-            className={`${bgColor} w-12 h-12 rounded-lg flex items-center justify-center`}
-          >
+          <div className={`${bgColor} w-12 h-12 rounded-lg flex items-center justify-center`}>
             <Icon
               icon="mdi:gas-station-outline"
               width="32"
@@ -39,10 +37,7 @@ export default function PriceCardsComponents({ card }: IPetrolCard) {
           </div>
         </div>
         <div>
-          <h3
-            className={`text-2xl font-semibold ${textColor}`}
-            data-testid="test-id-label"
-          >
+          <h3 className={`text-2xl font-semibold ${textColor}`} data-testid="test-id-label">
             {card.label}
           </h3>
           <p className="text-gray-600 font-medium" data-testid="test-id-price">

@@ -1,27 +1,24 @@
-import {
-  createHashRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 
-import MainLayout from "./layouts/MainLayout";
-import Dashboard from "./pages/Dashboard";
-import About from "./pages/About";
+import MainLayout from './layouts/MainLayout';
+import Dashboard from './pages/Dashboard';
+import About from './pages/About';
 
 const router = createHashRouter([
   {
-    path: "/",
+    path: '/',
     element: <MainLayout />,
     children: [
       {
         index: true,
-        element: <Dashboard />,
+        element: <Dashboard />
       },
       {
-        path: "about",
-        element: <About />,
-      },
-    ],
-  },
+        path: 'about',
+        element: <About />
+      }
+    ]
+  }
 ]);
 
 export default function App() {

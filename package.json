@@ -1,6 +1,7 @@
 {
   "name": "petrol-price-dashboard",
   "private": true,
+  "type": "module",
   "homepage": "https://kamilpixel.github.io/petrol-price-dashboard-source",
   "scripts": {
     "dev": "vite",
@@ -9,7 +10,16 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "npm run lint",
+      "npm run format"
+    ]
   },
   "dependencies": {
     "@headlessui/react": "^2.2.6",
@@ -41,6 +51,17 @@
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3",
     "vite": "^5.4.19",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "eslint": "^9.31.0",
+    "eslint-plugin-react": "^7.37.5",
+    "@eslint/js": "^9.31.0",
+    "@eslint/css": "^0.10.0",
+    "@eslint/json": "^0.13.1",
+    "@eslint/markdown": "^7.1.0",
+    "typescript-eslint": "^8.38.0",
+    "prettier": "^3.6.2",
+    "lint-staged": "^16.1.2",
+    "husky": "^9.1.7",
+    "globals": "^16.3.0"
   }
 }

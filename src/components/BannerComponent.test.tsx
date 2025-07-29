@@ -3,7 +3,7 @@ import { describe, test, expect, vi } from 'vitest';
 
 // Mock image src path
 vi.mock('~/assets/bg.jpg', () => ({
-  default: '/bg.jpg',
+  default: '/bg.jpg'
 }));
 
 import BannerComponent from './BannerComponent';

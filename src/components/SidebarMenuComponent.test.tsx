@@ -11,7 +11,7 @@ const Cog6ToothIcon = () => <svg data-testid="cog-6-tooth-icon" />;
 const mockMenuItems: SidebarMenu[] = [
   { name: 'Dashboard', href: '/', current: true, icon: HomeModernIcon },
   { name: 'About', href: '/about', current: false, icon: Cog6ToothIcon },
-  { name: 'Settings', href: '/settings', current: false, icon: Cog6ToothIcon },
+  { name: 'Settings', href: '/settings', current: false, icon: Cog6ToothIcon }
 ];
 
 describe('SidebarMenuComponent', () => {
@@ -19,7 +19,7 @@ describe('SidebarMenuComponent', () => {
     render(
       <MemoryRouter>
         <SidebarMenuComponent menuItems={mockMenuItems} />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     expect(screen.getByText('Dashboard')).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe('SidebarMenuComponent', () => {
     render(
       <MemoryRouter>
         <SidebarMenuComponent menuItems={mockMenuItems} />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     const links = screen.getAllByRole('link');
@@ -46,7 +46,7 @@ describe('SidebarMenuComponent', () => {
     render(
       <MemoryRouter>
         <SidebarMenuComponent menuItems={[]} />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     expect(screen.queryByRole('link')).not.toBeInTheDocument();

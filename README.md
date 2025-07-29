@@ -15,7 +15,7 @@ A fast and responsive **Petrol Price Dashboard** web application designed to hel
 
 ## 🖼️ Screenshot
 
-![Petrol Dashboard Screenshot](https://via.placeholder.com/1200x700.png?text=Petrol+Price+Dashboard+Preview)
+![Petrol Dashboard Screenshot](https://kamilpixel.github.io/petrol-price-dashboard/screenshot-price-dashboard.png)
 
 ---
 
